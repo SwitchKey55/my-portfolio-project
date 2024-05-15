@@ -1,0 +1,36 @@
+echo "# my-portfolio-project" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/SwitchKey55/my-portfolio-project.git
+git push -u origin main
+from web3 import Web3
+
+# Initialize a Web3 instance
+web3 = Web3(Web3.HTTPProvider('https://infura.io/v3/YOUR_INFURA_PROJECT_ID'))
+
+def resubmit_failed_transactions():
+    # Retrieve a list of failed transactions from a database or storage
+    failed_transactions = get_failed_transactions()
+
+    for tx in failed_transactions:
+        try:
+            # Resend the transaction with adjusted gas parameters
+            signed_tx = web3.eth.account.sign_transaction(tx, private_key='YOUR_PRIVATE_KEY')
+            tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+            
+            # Log the successful resubmission
+            log_successful_resubmission(tx_hash)
+            
+            # Remove the transaction from the failed transactions list
+            remove_failed_transaction(tx)
+            
+        except Exception as e:
+            # Handle any exceptions that occur during transaction resubmission
+            log_error(e)In this code, we assume you have implemented the following functions:
+
+get_failed_transactions(): Retrieves a list of failed transactions from a database or storage.
+log_successful_resubmission(tx_hash): Logs the successful resubmission of a transaction by storing the transaction hash.
+remove_failed_transaction(tx): Removes the transaction from the failed transactions list.
+log_error(e): Logs any exceptions that occur during the transaction resubmission process.
